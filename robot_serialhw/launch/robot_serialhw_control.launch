@@ -1,0 +1,16 @@
+<launch>
+
+	<!-- load joint controller configurations from YALM file to parameter server -->
+	<rosparam file="$(find robot_serialhw)/cfg/robot_serialhw_control.yaml" command="load"/>
+	
+	<!-- load the controllers -->
+	<node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="joint_state_controller joint_position_controller "/>
+	
+	<!-- ns= "robot_serialhw" 注意這個ns是controller_manager的namespace, 而不是給joint_state_controller-->
+	<!-- convert joint states to TF transfroms for rviz -->
+	<!--
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
+	<remap from = "/joint_states" to="/robot_serialhw/joint_states"/>
+	</node>
+	-->
+</launch>
